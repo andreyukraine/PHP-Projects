@@ -1,6 +1,6 @@
 <?php
-
-class Zooapteka extends Sites {
+//paralapok.com.ua
+class Paralapok extends Sites {
     public static function GetProduct($code = null)
     {
         if($code == null){
@@ -14,28 +14,28 @@ class Zooapteka extends Sites {
             $c = 0;
 
 
-            do {
 
-                $url = "https://www.zooapteka.kiev.ua/search/search?search=Advance";
+            do {
+                $url = "http://paralapok.com.ua/29_advance?p=" . $i;
 
                 $html = file_get_contents($url);
                 phpQuery::newDocument($html);
 
-                $pagesCount = 1;
-                foreach (pq('.search-item') as $product) {
-                    $temp = 0;
+                if ($i <= 1) {
+                    $pagesCount = pq('.pagination li')->length - 2;
+                }
+
+                foreach (pq('.ajax_block_product') as $product) {
+                    $pr = 0;
                     $products[$c]['url'] = pq($product)->find('a')->attr('href');
                     $products[$c]['imgUrl'] = pq($product)->find('img')->attr('src');
                     $products[$c]['name'] = pq($product)->find('img')->attr('alt');
 
+                    if ("ajax_id_product_".$code == pq($product)->find('.button')->attr('rel')) {
+                        $pr = substr(pq($product)->find('.price')->text(), 0, -7);
+                        return $pr;
+                    };
 
-                    foreach (pq($product)->find('option') as $key => $item) {
-                        if (pq($item)->attr('data-value') == $code) {
-
-                            $price = substr(pq($item)->attr('data-price'), 0, strrpos(pq($item)->attr('data-price'), ' '));
-                            return pq($price)->text();
-                        };
-                    }
 
                     $c++;
                 }

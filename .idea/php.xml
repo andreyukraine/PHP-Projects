@@ -4,6 +4,7 @@
     <option name="skippedFunctions">
       <list>
         <option value="Zoo-&gt;GetProduct" />
+        <option value="Korm::GetProduct" />
       </list>
     </option>
   </component>

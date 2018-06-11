@@ -7,6 +7,7 @@ class Sites {
         $class_name = ucfirst($fileclass);
         $w = new $class_name;
         $result = $w::GetProduct($code);
+
        return $result;
     }
 

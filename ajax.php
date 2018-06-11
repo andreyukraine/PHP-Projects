@@ -26,9 +26,9 @@ if (isset($_GET['q'])) {
                 $sites = $list[0];
                 unset($list[0]);
                 $temp_site = "";
-                $step = 0;
 
-                //вывводим сайты
+
+            //вывводим сайты
             $table .= '<tr>';
                     foreach ($sites as $site){
                         $table .=  '<td>' . $site . '</td>';
@@ -43,11 +43,18 @@ if (isset($_GET['q'])) {
                         $step = $w;
 
                         $temp_site = $sites[$w];
-                        $price = 0;
-
-                        if ($w != 0) {
-                            $price = $q->make($temp_site,$col);
-                            $table .= '<td>' . $price . '</td>';
+                        if ($w == 1) {
+                            $rec_price = $col;
+                        }
+                        $result = "";
+                        if ($w != 0 && $w != 1) {
+                            $result = $q->make($temp_site,$col);
+                            if ($result < $rec_price){
+                                $color = "red";
+                            }else{
+                                $color = "black";
+                            }
+                            $table .= '<td style="color:'.$color.'">' . $result . '</td>';
                         } else {
                             $table .= '<td>' . $col . '</td>';
                         }
